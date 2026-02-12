@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <!-- ✅ Basic SEO -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ Title & Description -->
+  <title>Free E-Book Store | Download Books in PDF | Digital Resource</title>
+  <meta name="description" content="Free digital e-book store to search and download books in PDF. Categories include Fiction, Science, Technology and Non-Fiction.">
+  <meta name="keywords" content="ebook store, free pdf books, online digital library, download ebooks, technology books, science books">
+  <meta name="author" content="Digital Resource">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yourdomain.com/">
+
+  <!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" href="../favicon.png">
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f7f7f7; }
+    header { background: #333; color: #fff; padding: 1rem; text-align: center; }
+    header h1 { margin: 0; }
+
+    .search-bar { text-align: center; padding: 1rem; }
+    .search-bar input { width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+
+    .container { display: flex; }
+
+    /* Sidebar */
+    .sidebar { width: 20%; background: #fff; padding: 1rem; border-right: 1px solid #ddd; }
+    .sidebar h3 { margin-top: 0; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar li { margin: 0.5rem 0; cursor: pointer; color: #333; }
+
+    /* Books */
+    .books { flex: 1; padding: 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .book { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+    .book img { max-width: 100px; height: auto; }
+    .book h4 { margin: 0.5rem 0; font-size: 1.1rem; }
+    .book p { font-size: 0.9rem; color: #666; }
+    .btn { display: inline-block; margin-top: 0.5rem; padding: 0.5rem 1rem; background: #333; color: #fff; border-radius: 4px; text-decoration: none; font-size: 0.9rem; }
+    .btn:hover { background: #555; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📚 Digital Resource</h1>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search by title, author, ISBN..." onkeyup="searchBooks()">
+  </div>
+
+  <div class="container">
+    <!-- Sidebar Categories -->
+    <aside class="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li onclick="filterCategory('All')">All</li>
+        <li onclick="filterCategory('Fiction')">Fiction</li>
+        <li onclick="filterCategory('Non-Fiction')">Non-Fiction</li>
+        <li onclick="filterCategory('Science')">Science</li>
+        <li onclick="filterCategory('Technology')">Technology</li>
+      </ul>
+    </aside>
+
+    <!-- Books Section -->
+    <section class="books" id="bookList">
+      <!-- Books will load here -->
+    </section>
+  </div>
+
+  <script>
+    const books = [
+      { title: "BCA_Part -II_2024-25", author: "Atal vihari vajpyee university", isbn: "9780743273565", category: "Fiction", cover: "https://covers.openlibrary.org/b/id/8228691-L.jpg", link: "storage/bca.pdf" },
+      { title: "A Brief History of Time", author: "Stephen Hawking", isbn: "9780553380163", category: "Science", cover: "https://covers.openlibrary.org/b/id/240726-L.jpg", link: "#" },
+      { title: "Clean Code", author: "Robert C. Martin", isbn: "9780132350884", category: "Technology", cover: "https://covers.openlibrary.org/b/id/7109862-L.jpg", link: "#" },
+      { title: "Sapiens", author: "Yuval Noah Harari", isbn: "9780062316110", category: "Non-Fiction", cover: "https://covers.openlibrary.org/b/id/8377226-L.jpg", link: "#" },
+    ];
+
+    function displayBooks(list) {
+      const bookList = document.getElementById("bookList");
+      bookList.innerHTML = "";
+      list.forEach(book => {
+        bookList.innerHTML += `
+          <div class="book">
+            <img src="${book.cover}" alt="${book.title}">
+            <h4>${book.title}</h4>
+            <p>by ${book.author}</p>
+            <p><small>ISBN: ${book.isbn}</small></p>
+            <a href="${book.link}" class="btn">View / Download</a>
+          </div>
+        `;
+      });
+    }
+
+    function searchBooks() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = books.filter(book =>
+        book.title.toLowerCase().includes(input) ||
+        book.author.toLowerCase().includes(input) ||
+        book.isbn.includes(input)
+      );
+      displayBooks(filtered);
+    }
+
+    function filterCategory(category) {
+      if (category === 'All') {
+        displayBooks(books);
+      } else {
+        const filtered = books.filter(book => book.category === category);
+        displayBooks(filtered);
+      }
+    }
+
+    // Initial Load
+    displayBooks(books);
+  </script>
+
+  
+  <!-- ✅ Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BookStore",
+    "name": "Digital Resource E-Book Store",
+    "url": "https://yourdomain.com",
+    "description": "Free digital ebook store for students and readers"
+  }
+  </script>
+</body>
+</html>

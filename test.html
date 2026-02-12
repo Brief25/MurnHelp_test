@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!-- Multi-link Download Demo Card -->
+<article class="card">
+  <div class="thumb" id="demoThumb"></div>
+  <div class="content">
+    <div class="title">Demo Video / File</div>
+    <div class="meta">Category • 12 MB • 2025-12-27</div>
+    <div class="tags">
+      <span class="tag">Demo</span>
+      <span class="tag">Test</span>
+    </div>
+  </div>
+  <div class="actions">
+    <button id="multiDownloadBtn" class="btn primary">Download</button>
+  </div>
+</article>
+
+<script>
+  // ===== Random demo images =====
+  const demoImages = [
+    "https://picsum.photos/400/250?random=1",
+    "https://picsum.photos/400/250?random=2",
+    "https://picsum.photos/400/250?random=3",
+    "https://picsum.photos/400/250?random=4",
+    "https://picsum.photos/400/250?random=5"
+  ];
+
+  // Set a random image for the demo thumbnail
+  const thumb = document.getElementById("demoThumb");
+  const randomThumb = demoImages[Math.floor(Math.random() * demoImages.length)];
+  thumb.style.background = `linear-gradient(135deg, rgba(255,255,255,.25), rgba(229,9,20,.18)), url('${randomThumb}')`;
+  thumb.style.backgroundSize = "cover";
+  thumb.style.backgroundPosition = "center";
+  thumb.style.backgroundRepeat = "no-repeat";
+  thumb.style.height = "180px";
+  thumb.style.borderRadius = "12px";
+
+  // ===== Multi-link Download Button =====
+  const multiLinks = [
+    "https://example.com/file1.pdf",
+    "https://example.com/file2.pdf",
+    "https://example.com/file3.pdf"
+  ];
+
+  let seqIndex = 0; // for sequential option
+
+  const btn = document.getElementById("multiDownloadBtn");
+
+  // Random redirect
+  btn.addEventListener("click", () => {
+    const randomIndex = Math.floor(Math.random() * multiLinks.length);
+    window.location.href = multiLinks[randomIndex];
+  });
+
+  // Sequential redirect (uncomment if needed)
+  /*
+  btn.addEventListener("click", () => {
+    window.location.href = multiLinks[seqIndex];
+    seqIndex = (seqIndex + 1) % multiLinks.length;
+  });
+  */
+</script>
+
+</body>
+</html>

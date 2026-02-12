@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ✅ Primary SEO Meta -->
+<title>Murn Help | Professional Web Developer, Blogger & Digital Resource Hub</title>
+<meta name="description" content="Murn Help is a professional web developer, blogger and digital creator website offering free downloads, modern projects, tech blogs, digital resources and online tools.">
+<meta name="keywords" content="web developer portfolio, free digital resources, website downloads, programming projects, tech blogs, UI UX designer, frontend developer, free tools, web development services">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Murn Help">
+
+<!-- ✅ Canonical -->
+<link rel="canonical" href="https://yourdomain.com/">
+
+<!-- ✅ Open Graph for Social Sharing -->
+<meta property="og:title" content="Murn Help | Web Developer, Blogger & Digital Resource Platform">
+<meta property="og:description" content="Explore modern web projects, tech blogs, free digital downloads and learning resources at Murn Help.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yourdomain.com/">
+<meta property="og:image" content="https://yourdomain.com/seo-cover.jpg">
+
+<!-- ✅ Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Murn Help | Web Developer & Free Digital Resources">
+<meta name="twitter:description" content="Projects, blogs, downloads, tools and web development learning resources.">
+<meta name="twitter:image" content="https://yourdomain.com/seo-cover.jpg">
+
+<!-- ✅ Favicon -->
+<link rel="icon" type="image/png" href="favicon.png">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+
+    header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: #111; position: sticky; top: 0; z-index: 10; }
+    header h1 { color: #ff3333; font-size: 1.5rem; }
+    nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+    nav a:hover { color: #ff3333; }
+
+    .menu-icon{ width: auto; padding: 0px 15px; display: none; flex-direction: column; }
+    .menu-line{ height: 3px; background-color: white; margin: 6px 0; }
+    
+    #line-1{ width: 28px; }
+    #line-2{ width: 40px; }
+    
+    .side-nav{ width: 90%; background-color: rgb(0, 0, 0); /* opacity: 70%;*/ display: flex; flex-direction: column; }
+    .sidde-nav-link{ width: auto; padding: 20px 30px; }
+    .sidde-nav-link a{ text-decoration: none; color: white; }
+    .sidde-nav-link a:hover{ color: #ff3333; }
+
+    .hero { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; background: linear-gradient(135deg, #000 60%, #1a0000 100%); padding: 2rem; }
+    .hero h2 { font-size: 2.5rem; color: #fff; animation: fadeInDown 1.5s ease; }
+    .hero h2 span { color: #ff3333; }
+    .hero p { margin-top: 1rem; font-size: 1.2rem; color: #bbb; animation: fadeInUp 2s ease; }
+    .btn { margin-top: 2rem; padding: 0.8rem 1.5rem; background: #ff3333; color: #fff; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; transition: 0.3s; animation: fadeIn 2.5s ease; }
+    .btn:hover { background: #cc0000; transform: scale(1.05); }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media only screen and (max-width: 800px) {
+      nav { display: none; }
+      .menu-icon{ display: flex; }
+      }
+
+    /* Slideshow */
+    .slideshow { width: 100%; height: 100vh; position: relative; margin: auto; overflow: hidden; background: #111; }
+    .slides { display: flex; width: 100%; height: 100%; transition: transform 1.5s ease-in-out; }
+    .slides img { width: 100%; flex: 0 0 100%; height: 100vh; object-fit: cover; background: #000; }
+
+    .caption { position: absolute; bottom: 20%; left: 50%; transform: translateX(-50%); text-align: center; color: #fff; background: rgba(0,0,0,0.5); padding: 1rem 2rem; border-radius: 10px; }
+    .caption h3 { font-size: 2rem; color: #ff3333; margin-bottom: 0.5rem; }
+    .caption p { font-size: 1.1rem; color: #ddd; }
+
+    .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 51, 51, 0.7); color: #fff; border: none; padding: 10px; cursor: pointer; border-radius: 50%; font-size: 20px; z-index: 2; }
+    .prev { left: 20px; }
+    .next { right: 20px; }
+
+    .dots { text-align: center; position: absolute; bottom: 20px; width: 100%; }
+    .dot { height: 12px; width: 12px; margin: 0 5px; background: #bbb; border-radius: 50%; display: inline-block; cursor: pointer; transition: background 0.6s ease; }
+    .active { background: #ff3333; }
+
+    /* About Section */
+    .about { padding: 4rem 2rem; background: #111; text-align: left; }
+    .about h3, h2 { color: #ff3333; margin-bottom: 1rem; font-size: 2rem; animation: fadeInDown 1.5s ease; }
+    .about p, a { color: #ddd; max-width: 900px; margin: 0 5px; text-align: justify; line-height: 1.6; animation: fadeInUp 2s ease; }
+    /*.about_link {color : rgb(153, 35, 35); padding: 2px 4px;}*/
+
+    /* Projects Section */
+    .projects { padding: 4rem 2rem; background: #0a0a0a; text-align: left; }
+    .projects h3 { color: #ff3333; font-size: 2rem; margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+    .project { background: #111; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(255, 0, 0, 0.4); transform: scale(1); transition: transform 0.5s, box-shadow 0.5s, opacity 1s; opacity: 0; }
+    .project img { width: 100%; height: 180px; object-fit: cover; transition: transform 0.5s; }
+    .project h4 { margin: 1rem; color: #fff; }
+    .project p { margin: 0 1rem 1rem; color: #bbb; font-size: 0.9rem; }
+    .project:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 0, 0, 0.7); }
+    .project:hover img { transform: scale(1.1); }
+
+    /* Fade-in on scroll */
+    .fade-in { opacity: 1 !important; }
+
+    /* Contact Section */
+    .contact { padding: 4rem 2rem; background: #111; text-align: center; }
+    .contact h3 { color: #ff3333; font-size: 2rem; margin-bottom: 1rem; }
+    .contact form { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+    .contact input, .contact textarea { padding: 0.8rem; border: none; border-radius: 5px; background: #222; color: #fff; }
+    .contact input:focus, .contact textarea:focus { outline: 2px solid #ff3333; }
+    .contact button { padding: 0.8rem; background: #ff3333; border: none; border-radius: 5px; color: #fff; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+    .contact button:hover { background: #cc0000; }
+    .contact select {padding: 0.8rem; border: none; border-radius: 5px; background: #222;/* same as inputs */ color: #fff;/* white text */font-size: 1rem; appearance: none;/* removes default arrow styling */cursor: pointer;}
+    .contact select option {background: #111; color: #fff;}
+    .contact select:focus {outline: 2px solid #ff3333;}
+
+
+    /* Footer */
+    footer { background: #000; color: #888; text-align: center; padding: 1rem; margin-top: 2rem; }
+    footer a { color: #ff3333; text-decoration: none; }
+
+    /* Back to Top Button */
+    #backToTop { position: fixed; bottom: 20px; right: 20px; background: #ff3333; color: #fff; border: none; padding: 10px 15px; border-radius: 50%; font-size: 18px; cursor: pointer; display: none; transition: background 0.3s, transform 0.3s; }
+    #backToTop:hover { background: #cc0000; transform: scale(1.1); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Murn_Help</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="5221_Blogs/index.html">Blogs</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="5221_DigitalResource/index.html">Digital Resource</a>
+      <a href="5221_Download_Hub/index.html">Download Hub</a>
+      <a href="5221_Shop/off.html">Shop</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="menu-icon" onclick="myFunction(this)">
+                <span id="line-1" class="menu-line"></span>
+                <span id="line-2" class="menu-line"></span>
+    </div>
+  </header>
+
+   <div id="side-nav" style="z-index: 0; width: 100%; display: none; align-items: center; justify-content: center; padding: 20px 0px;">
+    <div class="side-nav" style=" border-radius: 20px;">
+        <span class="sidde-nav-link">
+            <a href="#home">Home</a>
+        </span>
+        <span class="sidde-nav-link">
+            <a href="5221_Blogs/index.html">Blogs</a>
+        </span>
+        <span class="sidde-nav-link">
+            <a href="#projects">Projects</a>
+        </span>
+        <span class="sidde-nav-link">
+            <a href="5221_Download_Hub/index.html">Download Hub</a>
+        </span>
+        <span class="sidde-nav-link">
+            <a href="5221_Shop/off.html">Shop</a>
+        </span>
+        <span class="sidde-nav-link">
+            <a href="5221_DigitalResource/index.html">Digital Resource</a>
+        </span>
+        <span class="sidde-nav-link">
+            <a href="#about">About</a>
+        </span>
+        <span class="sidde-nav-link">
+            <a href="#contact">Contact</a>
+        </span>
+    </div>
+    </div>
+
+    <script>
+        function myFunction(x) {
+        x.classList.toggle("change");
+
+        const sideNav = document.getElementById("side-nav");
+        sideNav.style.display = (sideNav.style.display === "flex") ? "none" : "flex";
+        }
+    </script>
+
+  <section class="hero" id="home">
+    <h2>Hello, Welcome To <span>Murn Help</span></h2>
+    <p>Download Any Thing</p>
+    <button class="btn">Explore My Work</button>
+  </section>
+
+  <section class="slideshow" id="slideshow">
+    <div class="slides">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" loading="lazy" alt="Slide 1">
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" loading="lazy" alt="Slide 2">
+      <img src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1" loading="lazy" alt="Slide 3">
+      <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf" loading="lazy" alt="Slide 4">
+      <img src="https://images.unsplash.com/photo-1503602642458-232111445657" loading="lazy" alt="Slide 5">
+    </div>
+    <div class="caption">
+      <h3></h3> <!--Slid Title-->
+      <p></p> <!--This is a short description for the current slide.-->
+    </div>
+    <button class="nav-btn prev">&#10094;</button>
+    <button class="nav-btn next">&#10095;</button>
+    <div class="dots"></div>
+  </section>
+
+  <section class="about" id="about">
+    <h3>About Me</h3>
+    <!--<p>
+      Hello, I’m — a passionate BCA student who takes pride in delivering tasks efficiently and on schedule.
+    </p>-->
+    <p>Welcome to <span>Murn Help</span></p>
+    <p>
+    Murn Help is a platform that serves as an interface for accessing free public content, including e-books, movies, songs, software, and other digital resources.
+    </p>
+
+    <h2>Follow Us On Other Social Media</h2>
+    <a class="about_link" href="#">Telegram</a>
+    <a class="about_link" href="#">Reddit</a>
+    <a class="about_link" href="#">Discord</a>
+    <a class="about_link" href="#">FaceBook</a>
+  </section>
+
+  <section class="projects" id="projects">
+    <h3>Portfolio</h3>
+    <div class="grid">
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1505238680356-667803448bb6" alt="Project 2">
+        <h4><a style="text-decoration: none; color: white;" href="Projects/Portfolio/portfolio.html">Portfolio</a></h4>
+        <p>A brief description of this awesome project.</p>
+      </div>
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Project 3">
+        <h4>Project Three</h4>
+        <p>A brief description of this awesome project.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h3>Contact</h3>
+    <p style="padding: 15px 0px;">You can contact me and you can Report your problem by filling the following form.</p>
+    <form id="contact-form" action="5221_Backend/Home/server.php" method="post">
+        <input type="text" placeholder="Your Name" name="name" required>
+
+        <select name="sub" required>
+            <option value="" disabled selected>Select Subject</option>
+            <option value="Suscribe">Suscribe</option>
+            <option value="Comment">Comment</option>
+            <option value="Report Bug">Report Bug</option>
+            <option value="Request">Request</option>
+            <option value="Suggestion">Suggestion</option>
+            <option value="Feedback">Feedback</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <input type="email" placeholder="Your Email" name="email" required>
+        <textarea rows="5" placeholder="Your Message" name="message" required></textarea>
+
+        <button type="reset">Cancel</button>
+        <button type="submit" name="comment">Send Message</button>
+    </form>
+
+  </section>
+
+  <footer>
+    <p>© 2025 Your Name | Made with ❤️ | <a href="#">LinkedIn</a> | <a href="#">GitHub</a></p>
+  </footer>
+
+  <button id="backToTop">↑</button>
+
+
+
+
+  <script>
+    // Fade-in effect on scroll
+    const projects = document.querySelectorAll('.project');
+    const revealOnScroll = () => {
+      projects.forEach(proj => {
+        const rect = proj.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          proj.classList.add('fade-in');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Slideshow functionality
+    let slideIndex = 0;
+    const slides = document.querySelector('.slides');
+    const images = document.querySelectorAll('.slides img');
+    const caption = document.querySelector('.caption');
+    const dotsContainer = document.querySelector('.dots');
+    const totalSlides = images.length;
+    let autoSlide;
+
+    const captions = [
+      { title: "Creative Ideas", text: "Turning imagination into digital reality." },
+      { title: "Modern Design", text: "Clean, responsive, and user-friendly layouts." },
+      { title: "Web Development", text: "Building robust and scalable applications." },
+      { title: "UI/UX", text: "Crafting interfaces that delight users." },
+      { title: "Innovation", text: "Always exploring new technologies." }
+    ];
+
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => showSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots = document.querySelectorAll('.dot');
+
+    const showSlide = (index) => {
+      if (index >= totalSlides) slideIndex = 0;
+      else if (index < 0) slideIndex = totalSlides - 1;
+      else slideIndex = index;
+
+      slides.style.transition = "transform 1.5s ease-in-out";
+      slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === slideIndex));
+
+      caption.querySelector('h3').textContent = captions[slideIndex].title;
+      caption.querySelector('p').textContent = captions[slideIndex].text;
+    };
+
+    document.querySelector('.next').addEventListener('click', () => showSlide(slideIndex + 1));
+    document.querySelector('.prev').addEventListener('click', () => showSlide(slideIndex - 1));
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      autoSlide = setInterval(() => showSlide(slideIndex + 1), 6000);
+    };
+
+    const stopAutoSlide = () => {
+      if (autoSlide) clearInterval(autoSlide);
+    };
+
+    document.querySelector('.slideshow').addEventListener('mouseenter', stopAutoSlide);
+    document.querySelector('.slideshow').addEventListener('mouseleave', startAutoSlide);
+
+    // Swipe Support for Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const slideshow = document.querySelector('.slideshow');
+
+    slideshow.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    slideshow.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+
+    const handleGesture = () => {
+      if (touchEndX < touchStartX - 50) showSlide(slideIndex + 1);
+      if (touchEndX > touchStartX + 50) showSlide(slideIndex - 1);
+    };
+
+    startAutoSlide();
+
+    // Back to Top Button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) backToTop.style.display = 'block';
+      else backToTop.style.display = 'none';
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>

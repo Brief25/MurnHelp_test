@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Smart Redirect System</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif;}
+body{background:linear-gradient(135deg,#141e30,#243b55);min-height:100vh;display:flex;justify-content:center;align-items:center;color:#fff;user-select:none;}
+.container{width:90%;max-width:540px;background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);border-radius:18px;padding:35px;box-shadow:0 25px 50px rgba(0,0,0,0.4);text-align:center;}
+h1{margin-bottom:6px;}
+.tag{font-size:14px;opacity:0.8;margin-bottom:20px;}
+input{width:100%;padding:14px;border-radius:10px;border:none;outline:none;margin-bottom:12px;font-size:15px;}
+button{width:100%;padding:15px;border:none;border-radius:50px;font-size:16px;cursor:pointer;margin-bottom:12px;background:linear-gradient(135deg,#00c6ff,#0072ff);color:#fff;transition:.3s;}
+button:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,114,255,0.5);}
+.toggle{background:transparent;border:1px solid rgba(255,255,255,.3);}
+.captcha-box{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.35);padding:12px;border-radius:10px;margin-bottom:10px;}
+.captcha{font-size:22px;letter-spacing:4px;font-weight:bold;text-decoration:line-through;}
+.refresh{cursor:pointer;}
+.mode{font-size:13px;opacity:.7;margin-bottom:15px;}
+.analytics{background:rgba(0,0,0,.3);padding:15px;border-radius:12px;text-align:left;font-size:14px;}
+.analytics h3{text-align:center;margin-bottom:8px;}
+.blur{filter:blur(10px);pointer-events:none;}
+footer{margin-top:18px;font-size:12px;opacity:.5;}
+#redirectMessage{display:none;margin:15px 0;font-size:16px;}
+#progressBar{background:#555;border-radius:5px;overflow:hidden;height:8px;margin-top:5px;}
+#progress{height:100%;width:0%;background:#00c6ff;}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Secure Redirect</h1>
+    <div class="tag">CAPTCHA + Security Protection</div>
+
+    <div class="captcha-box">
+        <div id="captcha" class="captcha"></div>
+        <div class="refresh" onclick="generateCaptcha()">🔄</div>
+    </div>
+    <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+
+    <div id="redirectMessage">
+        Redirecting in <span id="countdown">3</span> seconds...
+        <div id="progressBar"><div id="progress"></div></div>
+    </div>
+
+    <button onclick="redirect()">Go to Website</button>
+    <button class="toggle" onclick="toggleMode()">Switch Mode</button>
+
+    <div class="mode" id="mode">Mode: Random</div>
+
+    <div class="analytics">
+        <h3>📊 Analytics</h3>
+        <p>Total Clicks: <span id="total">0</span></p>
+        <div id="linkCounters"></div>
+    </div>
+
+    <footer>© 2025 Secure Smart Redirect System</footer>
+</div>
+
+<script>
+const CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+let links = [], captchaCode="", index=0, random=true;
+let startTime = Date.now(), captchaRefreshCount = 0, mouseMoves = 0;
+
+/* ========== FETCH LINKS FROM SERVER ========== */
+async function loadLinks(){
+    try{
+        const res = await fetch('api_links.php');
+        if(!res.ok) throw new Error("Failed to fetch links");
+        links = await res.json();
+
+        links.forEach(l=>{
+            if(!localStorage.getItem(l.key)) localStorage.setItem(l.key,0);
+        });
+        if(!localStorage.getItem("total")) localStorage.setItem("total",0);
+
+        renderLinkCounters();
+        updateUI();
+        generateCaptcha();
+    } catch(err){
+        console.error(err);
+        alert("Failed to load redirect links. Try again later.");
+    }
+}
+loadLinks();
+
+/* ========== RENDER LINK COUNTERS ========== */
+function renderLinkCounters(){
+    const container = document.getElementById("linkCounters");
+    container.innerHTML = "";
+    links.forEach(l=>{
+        const p = document.createElement("p");
+        p.innerHTML = `${l.name}: <span id="${l.key}">0</span>`;
+        container.appendChild(p);
+    });
+}
+
+/* ========== CAPTCHA ========== */
+function generateCaptcha(){
+    captchaCode="";
+    let length = 5;
+    if(captchaRefreshCount > 3) length = 6;
+    if(captchaRefreshCount > 6) length = 7;
+    for(let i=0;i<length;i++) captchaCode += CHARS[Math.floor(Math.random()*CHARS.length)];
+    document.getElementById("captcha").innerText = captchaCode;
+    captchaRefreshCount++;
+}
+
+/* ========== REDIRECT ========== */
+function redirect(){
+    const cap = document.getElementById("captchaInput").value;
+    if(cap !== captchaCode){
+        alert("❌ Incorrect CAPTCHA");
+        generateCaptcha();
+        return;
+    }
+    logInteractions();
+    if(links.length===0){ alert("No links available for redirect."); return; }
+
+    let link = random ? links[Math.floor(Math.random()*links.length)] : links[index++%links.length];
+
+    localStorage.setItem("total", +localStorage.getItem("total")+1);
+    localStorage.setItem(link.key, +localStorage.getItem(link.key)+1);
+    updateUI();
+    generateCaptcha();
+    startCountdownAndRedirect(link.url);
+}
+
+/* ========== COUNTDOWN / REDIRECT ========== */
+function startCountdownAndRedirect(url){
+    let countdown=3;
+    const countdownEl=document.getElementById('countdown');
+    const progressEl=document.getElementById('progress');
+    const messageEl=document.getElementById('redirectMessage');
+
+    messageEl.style.display='block';
+    progressEl.style.width='0%';
+
+    const interval=setInterval(()=>{
+        countdown--;
+        countdownEl.innerText=countdown;
+        progressEl.style.width=`${(3-countdown)/3*100}%`;
+        if(countdown<=0){ clearInterval(interval); window.open(url,"_blank"); messageEl.style.display='none'; }
+    },1000);
+}
+
+/* ========== MODE ========== */
+function toggleMode(){ random=!random; document.getElementById("mode").innerText="Mode: "+(random?"Random":"Sequential"); }
+
+/* ========== UI ========== */
+function updateUI(){
+    document.getElementById("total").innerText = localStorage.getItem("total");
+    links.forEach(l=>{
+        const el=document.getElementById(l.key);
+        if(el) el.innerText=localStorage.getItem(l.key);
+    });
+}
+
+/* ========== USER INTERACTIONS ========== */
+function logInteractions(){
+    const timeSpent=Math.floor((Date.now()-startTime)/1000);
+    console.log("Time spent:", timeSpent,"s");
+    console.log("CAPTCHA refreshes:", captchaRefreshCount);
+    console.log("Mouse movements:", mouseMoves);
+}
+document.addEventListener("mousemove",()=>mouseMoves++);
+const captchaInput=document.getElementById("captchaInput");
+["copy","paste","dragstart","drop"].forEach(e=>captchaInput.addEventListener(e,ev=>ev.preventDefault()));
+
+/* ========== SCREENSHOT / DEVTOOLS BLOCK ========== */
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("keydown",e=>{
+    if(e.key==="PrintScreen"){alert("🚫 Screenshot blocked");navigator.clipboard.writeText(""); e.preventDefault();}
+    if((e.ctrlKey && ["c","u","s", "v", "i"].includes(e.key.toLowerCase())) || (e.ctrlKey && e.shiftKey && ["i","j"].includes(e.key.toLowerCase())) || e.key==="F12"){alert("🚫 Action blocked"); e.preventDefault();}
+});
+document.addEventListener("visibilitychange",()=>{document.body.classList.toggle("blur",document.hidden);});
+setInterval(()=>{if(window.outerWidth-window.innerWidth>160){document.body.innerHTML="<h2 style='text-align:center;margin-top:20%'>Access Blocked</h2>";}},1500);
+</script>
+
+</body>
+</html>
